@@ -27,7 +27,10 @@ export default class Signup extends Component {
       })
     })
       .then(resp => resp.json())
-      .then(data => this.props.setUser(data))
+      .then(data => {
+        this.props.setUser(data)
+        localStorage.token = data.data.id
+      })
       .catch(err => console.error(err.stack))
   };
 

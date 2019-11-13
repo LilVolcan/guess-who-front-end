@@ -4,25 +4,19 @@ import { thisExpression } from "@babel/types";
 export default class Themes extends Component {
   state = {
     themes: [],
-    pickedTheme: null
+
   };
 
   componentDidMount() {
     fetch("http://192.168.128.177:8000/themes").then(resp =>
       resp.json().then(data =>
         this.setState({
-          themes: data,
-          pickedTheme: data[0].id
+          themes: data
         })
       )
     );
   }
 
-  handleChange = event => {
-    this.setState({
-      pickedTheme: event.target.children[1].dataset.id
-    });
-  };
 
   handleClick = () => {
     fetch("http://192.168.128.177:8000/games", {
@@ -32,31 +26,31 @@ export default class Themes extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        theme_id: this.state.pickedTheme,
+        theme_id: this.props.pickedTheme,
         player1_id: this.props.user
       })
     })
       .then(resp => resp.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         this.props.setGame(data);
         if (data.id) {
           this.props.history.push(`/game/${data.id}`);
         } else {
-          alert("You either Havent Logged in or havent choosen your theme");
+          alert("You either Haven't Logged in or havent choosen your theme");
         }
       });
   };
 
   render() {
-    console.log(this.props.history);
+    // console.log(this.props.history);
     return (
       <div>
         <p>Pick a theme and get going!</p>
-        <select onChange={this.handleChange}>
-          <option>XxRedDarknessxX</option>
+        <select onChange={this.props.changeTheme}>
+          <option>Please select Theme</option>
           {this.state.themes.map(theme => (
-            <option key={theme.id} data-id={theme.id}>
+            <option key={theme.id} value={theme.id}>
               {theme.theme_name}
             </option>
           ))}

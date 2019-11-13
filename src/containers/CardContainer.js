@@ -12,7 +12,7 @@ export default class CardContainer extends Component {
   render() {
     return (
       <div style={{margin: "10px"}}>
-        <Row className="show-grid">
+        <Row md={4} className="">
               {this.renderCards()}            
         </Row>
         

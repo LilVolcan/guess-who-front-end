@@ -24,7 +24,11 @@ export default class Login extends Component {
       body: JSON.stringify(this.state)
     })
       .then(resp => resp.json())
-      .then(data => this.props.setUser(data))
+      .then(data => {
+        console.log(data)
+        this.props.setUser(data)
+        localStorage.token = data.data.id
+      })
       .catch(error => alert("Invalid Login.  Please try Again!"))
   };
 

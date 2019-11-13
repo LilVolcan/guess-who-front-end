@@ -10,9 +10,12 @@ class Header extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
+            <Nav.Link href="/room">Rooms</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/login" onClick={() => { localStorage.removeItem('token')}}>
+              {localStorage.token ? "Logout" : "Login"}
+            </Nav.Link>
             <Nav.Link href="/signup">Sign up</Nav.Link>
           </Nav>
         </Navbar.Collapse>

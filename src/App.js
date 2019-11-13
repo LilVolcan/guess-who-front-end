@@ -7,13 +7,26 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
+import Room from "./containers/Room";
 
 export default class App extends React.Component {
   state = {
     user: "",
-    gameid: null
+    gameid: null,
+    pickedTheme: 0,
+    selectedCard: null,
+    notOne: false,
+    cards: {}
   };
-
+  componentDidMount() {
+    if (localStorage.token) {
+      fetch(`http://192.168.128.177:8000/users/${localStorage.token}`)
+        .then(resp => resp.json())
+        .then(data => this.setState({
+          user: data.id
+        }));
+    }
+  }
   setUser = data => {
     this.setState(
       {
@@ -27,12 +40,73 @@ export default class App extends React.Component {
     );
   };
 
-  setGame = data => {
-    console.log(data);
-    this.setState({});
+  handleClickCard = card => {
+    if (this.state.selectedCard !== null) {
+      let updatedCard = { ...card, hidden: true };
+      this.setState({
+        cards: { ...this.state.cards, [card.id]: updatedCard }
+      });
+    } else {
+      this.setState({
+        selectedCard: card.id
+      });
+      fetch(`http://192.168.128.177:8000/games/${this.state.gameid}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          p1card_id: card.id
+        })
+      })
+        .then(resp => resp.json())
+        .then(data => console.log(data));
+    }
   };
 
+  handleChangeTheme = event => {
+    console.log("picked theme:", this.state.pickedTheme);
+    this.setState({
+      pickedTheme: event.target.value
+    });
+    console.log("pickedTheme2: ", this.state.pickedTheme);
+    fetch(`http://192.168.128.177:8000/cards/${event.target.value}`)
+      .then(resp => resp.json())
+      .then(data => {
+        let hashmap = {};
+        data.map(card => (hashmap[card.id] = card));
+        this.setState({
+          cards: hashmap
+        });
+      });
+  };
+
+  setGame = data => {
+    console.log(data);
+    this.setState({
+      gameid: data.id
+    });
+  };
+
+  setPlayer = (id, theme_id) =>{
+    
+    fetch(`http://192.168.128.177:8000/cards/${theme_id}`)
+      .then(resp => resp.json())
+      .then(data => {
+        let hashmap = {};
+        data.map(card => (hashmap[card.id] = card));
+        this.setState({
+          cards: hashmap
+        });
+      });
+      this.setState({
+        notOne: true
+      }, this.props.history.push(`/game/${id}`))
+  }
+
   render() {
+    console.log(this.state.notOne);
     return (
       <div>
         <Header />
@@ -54,7 +128,9 @@ export default class App extends React.Component {
           <Route
             exact
             path="/game/:gameid"
-            render={routerProps => <Game gameid={this.state.gameid} />}
+            render={routerProps => (
+              <Game {...this.state} handleClick={this.handleClickCard} />
+            )}
           />
           <Route
             exact
@@ -62,10 +138,16 @@ export default class App extends React.Component {
             render={routerProps => (
               <Home
                 {...routerProps}
-                user={this.state.user}
+                {...this.state}
                 setGame={this.setGame}
+                changeTheme={this.handleChangeTheme}
               />
             )}
+          />
+          <Route
+            exact
+            path="/room"
+            render={routerProps => <Room {...this.state} setPlayer={this.setPlayer} />}
           />
         </Switch>
       </div>
