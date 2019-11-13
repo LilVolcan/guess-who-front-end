@@ -11,13 +11,13 @@ import Signup from "./containers/Signup";
 export default class App extends React.Component {
   state = {
     user: "",
-    chosenTheme: ""
+    gameid: null
   };
 
   setUser = data => {
     this.setState(
       {
-        user: data.data.attributes.username
+        user: data.data.id
       },
       () => {
         data.data.attributes.username
@@ -27,8 +27,12 @@ export default class App extends React.Component {
     );
   };
 
+  setGame = data => {
+    console.log(data);
+    this.setState({});
+  };
+
   render() {
-    console.log(this.state.user);
     return (
       <div>
         <Header />
@@ -47,8 +51,22 @@ export default class App extends React.Component {
               <Signup {...routerProps} setUser={this.setUser} />
             )}
           />
-          <Route exact path="/game" render={routerProps => <Game />} />
-          <Route exact path="/home" render={routerProps => <Home />} />
+          <Route
+            exact
+            path="/game/:gameid"
+            render={routerProps => <Game gameid={this.state.gameid} />}
+          />
+          <Route
+            exact
+            path="/home"
+            render={routerProps => (
+              <Home
+                {...routerProps}
+                user={this.state.user}
+                setGame={this.setGame}
+              />
+            )}
+          />
         </Switch>
       </div>
     );

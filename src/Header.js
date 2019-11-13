@@ -6,12 +6,10 @@ class Header extends Component {
     return (
       // <div>Hello Amber</div>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Guess Who?</Navbar.Brand>
+        <Navbar.Brand href="/home">Guess Who?</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/home">Home</Nav.Link>
-            <Nav.Link href="/game">Game</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link href="/login">Login</Nav.Link>
