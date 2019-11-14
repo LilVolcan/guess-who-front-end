@@ -50,15 +50,19 @@ export default class App extends React.Component {
       this.setState({
         selectedCard: card.id
       });
+      let curObj = {}
+      if(this.state.notOne){
+        curObj = {p2card_id: card.id}
+      }else{
+        curObj = {p1card_id: card.id}
+      }
       fetch(`http://192.168.128.177:8000/games/${this.state.gameid}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
-        body: JSON.stringify({
-          p1card_id: card.id
-        })
+        body: JSON.stringify(curObj)
       })
         .then(resp => resp.json())
         .then(data => console.log(data));
@@ -101,7 +105,8 @@ export default class App extends React.Component {
         });
       });
       this.setState({
-        notOne: true
+        notOne: true,
+        gameid: id
       }, this.props.history.push(`/game/${id}`))
   }
 
