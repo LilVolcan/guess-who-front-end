@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { thisExpression } from "@babel/types";
+// import {Dropdown} from "react-bootstrap"
+
 
 export default class Themes extends Component {
   state = {
@@ -48,7 +49,7 @@ export default class Themes extends Component {
     // console.log(this.props.history);
     return (
       <div>
-        <p>Pick a theme and get going!</p>
+        <h1>Pick a theme and get going!</h1>
         <select onChange={this.props.changeTheme}>
           <option>Please select Theme</option>
           {this.state.themes.map(theme => (
@@ -57,7 +58,7 @@ export default class Themes extends Component {
             </option>
           ))}
         </select>
-        <button onClick={this.handleClick}>Start Game</button>
+        <button className="theme-button" onClick={this.handleClick}>Start Game</button>
       </div>
     );
   }

@@ -41,13 +41,20 @@ export default class Login extends Component {
           justifyContent: "center"
         }}
       >
+        <div className="background">
+
+        {/* </div> */}
         <Card
           className="text-center"
           border="dark"
           style={{
+            float: "right",
+            position: "fixed",
             width: "200px",
             padding: "10px",
-            margin: "50px"
+            left: "800px",
+            top: "100px"
+            // margin: "50px"
           }}
         >
           <Form onSubmit={this.handleSubmit}>
@@ -74,6 +81,7 @@ export default class Login extends Component {
             </Button>
           </Form>
         </Card>
+        </div>
       </div>
     );
   }

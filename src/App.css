@@ -20,3 +20,54 @@
 .App-link {
   color: #09d3ac;
 }
+
+.message-container {
+  border-style: solid; 
+  height: 450px;
+  width: 250px;
+  padding: 5px;
+  margin: 10px;
+  overflow: scroll;
+}
+
+.instr-container {
+  border-style: solid;
+  position: absolute;
+  right: 100px;
+  width: 40%;
+  height: 250px;
+  margin-top: 330px;
+  padding: 5px;
+}
+
+.theme-container {
+  border-style: solid;
+  position: absolute;
+  left: 100px;
+  width: 40%;
+  height: 250px;
+  margin-top: 330px;
+  padding: 5px;
+}
+
+.theme-button {
+  margin: 10px;
+}
+
+.home-page {
+
+  padding: 275px;
+  background-image: url("https://www.languagenut.com/en-gb/wp-content/uploads/sites/19/2018/11/Guess-Who-FI.png") ;
+  background-repeat: no-repeat;
+  background-position: center
+}
+
+.background {
+  padding: 25% 50%;
+  background-image: url("https://www.languagenut.com/en-gb/wp-content/uploads/sites/19/2018/11/Guess-Who-FI.png") ;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  
+}
