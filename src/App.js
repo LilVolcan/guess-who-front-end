@@ -18,7 +18,8 @@ export default class App extends React.Component {
     selectedCard: null,
     notOne: false,
     cards: {},
-    username: ""
+    username: "",
+    selectedCardObj: {}
   };
   componentDidMount() {
     if (localStorage.token) {
@@ -54,7 +55,8 @@ export default class App extends React.Component {
       });
     } else {
       this.setState({
-        selectedCard: card.id
+        selectedCard: card.id, 
+        selectedCardObj: card
       });
       let curObj = {};
       if (this.state.notOne) {

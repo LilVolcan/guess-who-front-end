@@ -8,10 +8,16 @@ export default class Home extends Component {
   render() {
     // console.log(this.props)
     return (
-      <div>
-        <h1>Welcome to Guess Who Dat?</h1>
-        <Themes {...this.props}/>
-        <Instructions />
+      <div className="home-page">
+        {/* <h1>Welcome to Guess Who Dat?</h1> */}
+        <div className="theme-container">
+          <Themes {...this.props}/>
+        </div>
+        <div className="instr-container">
+          <h3>Instructions:</h3>
+          <Instructions />
+        </div>
+        
       </div>
     );
   }

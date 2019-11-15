@@ -50,7 +50,7 @@ export default class CardContainer extends Component {
     // console.log("this is from recieved", message)
     console.log(data)
     this.setState({
-      messages: [...this.state.messages, data ]
+      messages: [data, ...this.state.messages]
     })
 
   }
@@ -79,7 +79,7 @@ export default class CardContainer extends Component {
               key={this.props.selectedCard}
               card={
                 this.props.selectedCard
-                  ? this.props.cards[this.props.selectedCard]
+                  ? this.props.selectedCardObj
                   : card
               }
             />
@@ -96,9 +96,9 @@ export default class CardContainer extends Component {
               </Form.Group>
               <Button variant="primary" type="submit">
                 Send
-              </Button>
+              </Button><br></br>
             </Form>
-            <div>
+            <div className="message-container">
               {this.renderMessage()}
             </div>
           </Col>
