@@ -2,11 +2,11 @@ import React, { Component } from "react";
 
 export default class Message extends Component {
   render() {
-      console.log(this.props)
+    console.log(this.props);
     return (
-      <div >
+      <div>
         <p>
-          {this.props.username}: {this.props.message} 
+          {this.props.username}: {this.props.message}
         </p>
       </div>
     );

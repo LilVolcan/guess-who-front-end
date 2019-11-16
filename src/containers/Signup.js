@@ -15,7 +15,7 @@ export default class Signup extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    fetch("http://192.168.128.177:8000/users", {
+    fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

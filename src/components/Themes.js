@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-// import {Dropdown} from "react-bootstrap"
-
 
 export default class Themes extends Component {
   state = {
-    themes: [],
-
+    themes: []
   };
 
   componentDidMount() {
-    fetch("http://192.168.128.177:8000/themes").then(resp =>
+    fetch("http://localhost:3000/themes").then(resp =>
       resp.json().then(data =>
         this.setState({
           themes: data
@@ -18,9 +15,8 @@ export default class Themes extends Component {
     );
   }
 
-
   handleClick = () => {
-    fetch("http://192.168.128.177:8000/games", {
+    fetch("http://localhost:3000/games", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +29,6 @@ export default class Themes extends Component {
     })
       .then(resp => resp.json())
       .then(data => {
-        // console.log(data);
         this.props.setGame(data);
         if (data.id) {
           this.props.history.push(`/game/${data.id}`);
@@ -43,10 +38,7 @@ export default class Themes extends Component {
       });
   };
 
-  
-
   render() {
-    // console.log(this.props.history);
     return (
       <div>
         <h1>Pick a theme and get going!</h1>
@@ -58,7 +50,9 @@ export default class Themes extends Component {
             </option>
           ))}
         </select>
-        <button className="theme-button" onClick={this.handleClick}>Start Game</button>
+        <button className="theme-button" onClick={this.handleClick}>
+          Start Game
+        </button>
       </div>
     );
   }
