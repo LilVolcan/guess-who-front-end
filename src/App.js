@@ -4,11 +4,10 @@ import Header from "./Header";
 import Home from "./containers/Home";
 import Game from "./containers/Game";
 import "./App.css";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import Room from "./containers/Room";
-import { ActionCableProvider } from "react-actioncable-provider";
 
 export default class App extends React.Component {
   state = {
@@ -23,7 +22,7 @@ export default class App extends React.Component {
   };
   componentDidMount() {
     if (localStorage.token) {
-      fetch(`http://192.168.128.177:8000/users/${localStorage.token}`)
+      fetch(`http://localhost:3000/users/${localStorage.token}`)
         .then(resp => resp.json())
         .then(data =>
           this.setState({
@@ -55,7 +54,7 @@ export default class App extends React.Component {
       });
     } else {
       this.setState({
-        selectedCard: card.id, 
+        selectedCard: card.id,
         selectedCardObj: card
       });
       let curObj = {};
@@ -64,7 +63,7 @@ export default class App extends React.Component {
       } else {
         curObj = { p1card_id: card.id };
       }
-      fetch(`http://192.168.128.177:8000/games/${this.state.gameid}`, {
+      fetch(`http://localhost:3000/games/${this.state.gameid}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -78,12 +77,12 @@ export default class App extends React.Component {
   };
 
   handleChangeTheme = event => {
-    console.log("picked theme:", this.state.pickedTheme);
+    // console.log("picked theme:", this.state.pickedTheme);
     this.setState({
       pickedTheme: event.target.value
     });
-    console.log("pickedTheme2: ", this.state.pickedTheme);
-    fetch(`http://192.168.128.177:8000/cards/${event.target.value}`)
+    // console.log("pickedTheme2: ", this.state.pickedTheme);
+    fetch(`http://localhost:3000/cards/${event.target.value}`)
       .then(resp => resp.json())
       .then(data => {
         let hashmap = {};
@@ -102,7 +101,7 @@ export default class App extends React.Component {
   };
 
   setPlayer = (id, theme_id) => {
-    fetch(`http://192.168.128.177:8000/cards/${theme_id}`)
+    fetch(`http://localhost:3000/cards/${theme_id}`)
       .then(resp => resp.json())
       .then(data => {
         let hashmap = {};
@@ -123,51 +122,49 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        
-          <Header />
-            <Switch>
-              <Route
-                exact
-                path="/login"
-                render={routerProps => (
-                  <Login {...routerProps} setUser={this.setUser} />
-                )}
+        <Header />
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={routerProps => (
+              <Login {...routerProps} setUser={this.setUser} />
+            )}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={routerProps => (
+              <Signup {...routerProps} setUser={this.setUser} />
+            )}
+          />
+          <Route
+            exact
+            path="/game/:gameid"
+            render={routerProps => (
+              <Game {...this.state} handleClick={this.handleClickCard} />
+            )}
+          />
+          <Route
+            exact
+            path="/home"
+            render={routerProps => (
+              <Home
+                {...routerProps}
+                {...this.state}
+                setGame={this.setGame}
+                changeTheme={this.handleChangeTheme}
               />
-              <Route
-                exact
-                path="/signup"
-                render={routerProps => (
-                  <Signup {...routerProps} setUser={this.setUser} />
-                )}
-              />
-              <Route
-                exact
-                path="/game/:gameid"
-                render={routerProps => (
-                  <Game {...this.state} handleClick={this.handleClickCard} />
-                )}
-              />
-              <Route
-                exact
-                path="/home"
-                render={routerProps => (
-                  <Home
-                    {...routerProps}
-                    {...this.state}
-                    setGame={this.setGame}
-                    changeTheme={this.handleChangeTheme}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/room"
-                render={routerProps => (
-                  <Room {...this.state} setPlayer={this.setPlayer} />
-                )}
-              />
-            </Switch>
-            
+            )}
+          />
+          <Route
+            exact
+            path="/room"
+            render={routerProps => (
+              <Room {...this.state} setPlayer={this.setPlayer} />
+            )}
+          />
+        </Switch>
       </div>
     );
   }

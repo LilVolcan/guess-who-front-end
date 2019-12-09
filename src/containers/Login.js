@@ -15,7 +15,7 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    fetch("http://192.168.128.177:8000/users/login", {
+    fetch("http://localhost:3000/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,11 +25,11 @@ export default class Login extends Component {
     })
       .then(resp => resp.json())
       .then(data => {
-        console.log(data)
-        this.props.setUser(data)
-        localStorage.token = data.data.id
+        console.log(data);
+        this.props.setUser(data);
+        localStorage.token = data.data.id;
       })
-      .catch(error => alert("Invalid Login.  Please try Again!"))
+      .catch(error => alert("Invalid Login.  Please try Again!"));
   };
 
   render() {
@@ -42,45 +42,44 @@ export default class Login extends Component {
         }}
       >
         <div className="background">
+          {/* </div> */}
+          <Card
+            className="text-center"
+            border="dark"
+            style={{
+              float: "right",
+              position: "fixed",
+              width: "200px",
+              padding: "10px",
+              left: "800px",
+              top: "100px"
+              // margin: "50px"
+            }}
+          >
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Group>
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  onChange={this.handleChange}
+                  name="username"
+                  placeholder="username"
+                />
+              </Form.Group>
 
-        {/* </div> */}
-        <Card
-          className="text-center"
-          border="dark"
-          style={{
-            float: "right",
-            position: "fixed",
-            width: "200px",
-            padding: "10px",
-            left: "800px",
-            top: "100px"
-            // margin: "50px"
-          }}
-        >
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Group>
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                onChange={this.handleChange}
-                name="username"
-                placeholder="username"
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                onChange={this.handleChange}
-                name="password"
-                placeholder="Password"
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Login
-            </Button>
-          </Form>
-        </Card>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  onChange={this.handleChange}
+                  name="password"
+                  placeholder="Password"
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Login
+              </Button>
+            </Form>
+          </Card>
         </div>
       </div>
     );

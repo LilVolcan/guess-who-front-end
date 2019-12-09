@@ -4,7 +4,6 @@ import { Navbar, Nav } from "react-bootstrap";
 class Header extends Component {
   render() {
     return (
-      // <div>Hello Amber</div>
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/home">Guess Who?</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -13,7 +12,12 @@ class Header extends Component {
             <Nav.Link href="/room">Games</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="/login" onClick={() => { localStorage.removeItem('token')}}>
+            <Nav.Link
+              href="/login"
+              onClick={() => {
+                localStorage.removeItem("token");
+              }}
+            >
               {localStorage.token ? "Logout" : "Login"}
             </Nav.Link>
             <Nav.Link href="/signup">Sign up</Nav.Link>

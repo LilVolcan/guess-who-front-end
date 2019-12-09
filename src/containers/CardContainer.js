@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ShowCard from "../components/ShowCard";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { ActionCableConsumer } from "react-actioncable-provider";
-import Message from '../components/Message'
+import Message from "../components/Message";
 
 export default class CardContainer extends Component {
   state = {
@@ -18,7 +18,7 @@ export default class CardContainer extends Component {
           handleClick={this.props.handleClick}
           key={key}
           card={this.props.cards[key]}
-          handleMessage ={this.handleMessage}
+          handleMessage={this.handleMessage}
         />
       );
     });
@@ -26,8 +26,8 @@ export default class CardContainer extends Component {
 
   handleClick = event => {
     event.preventDefault();
-    console.log(this.props.username)
-    fetch("http://192.168.128.177:8000/games/sendmessage", {
+    console.log(this.props.username);
+    fetch("http://localhost:3000/games/sendmessage", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,21 +46,22 @@ export default class CardContainer extends Component {
     });
   };
 
-  handleMessage = (data) =>{
+  handleMessage = data => {
     // console.log("this is from recieved", message)
-    console.log(data)
+    console.log(data);
     this.setState({
       messages: [data, ...this.state.messages]
-    })
+    });
+  };
 
-  }
-
-  renderMessage(){
-    return this.state.messages.map( (message,index) => <Message key={index}{...message} />)
+  renderMessage() {
+    return this.state.messages.map((message, index) => (
+      <Message key={index} {...message} />
+    ));
   }
 
   render() {
-    console.log(this.state.messages)
+    console.log(this.state.messages);
     let card = {
       id: null,
       img_url:
@@ -69,7 +70,10 @@ export default class CardContainer extends Component {
     };
     return (
       <div className="grid" style={{ margin: "10px", display: "flex" }}>
-        <ActionCableConsumer channel="QuestionChannel" onReceived={(message)=> this.handleMessage(message)}>
+        <ActionCableConsumer
+          channel="QuestionChannel"
+          onReceived={message => this.handleMessage(message)}
+        >
           <Col sm={10}>
             <Row md={4}>{this.renderCards()}</Row>
           </Col>
@@ -77,11 +81,7 @@ export default class CardContainer extends Component {
             <ShowCard
               handleClick={null}
               key={this.props.selectedCard}
-              card={
-                this.props.selectedCard
-                  ? this.props.selectedCardObj
-                  : card
-              }
+              card={this.props.selectedCard ? this.props.selectedCardObj : card}
             />
             <Form onSubmit={this.handleClick}>
               <Form.Group>
@@ -96,11 +96,10 @@ export default class CardContainer extends Component {
               </Form.Group>
               <Button variant="primary" type="submit">
                 Send
-              </Button><br></br>
+              </Button>
+              <br></br>
             </Form>
-            <div className="message-container">
-              {this.renderMessage()}
-            </div>
+            <div className="message-container">{this.renderMessage()}</div>
           </Col>
         </ActionCableConsumer>
       </div>

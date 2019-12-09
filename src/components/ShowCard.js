@@ -4,7 +4,7 @@ import { Card, Col, Button } from "react-bootstrap";
 export default class ShowCard extends Component {
 
   handleClick = (id) =>{
-    fetch(`http://192.168.128.177:8000/games/${this.props.gameid}/${this.props.user}`, {
+    fetch(`http://localhost:3000/games/${this.props.gameid}/${this.props.user}`, {
       method: "POST",
       headers: {
         "Content-Type": 'application/json',
@@ -20,19 +20,12 @@ export default class ShowCard extends Component {
     .then(data => this.props.handleMessage(data))
   }
 
-
-
   render() {
-    // console.log(this.props.card)
     const { id, img_url, name, hidden } = this.props.card;
-    // const {hidden} = this.props.card // if hidden is true, hide card
-    
-
     return (
       <div>
         <Col lg={2}>
           <Card
-            style={{}}
             onClick={() => this.props.handleClick(this.props.card)}
             className="text-center"
             border="dark"
