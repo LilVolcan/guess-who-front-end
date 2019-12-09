@@ -2,25 +2,23 @@ import React, { Component } from "react";
 import { Card, Col, Button } from "react-bootstrap";
 
 export default class ShowCard extends Component {
-  handleClick = id => {
-    fetch(
-      `http://localhost:3000/games/${this.props.gameid}/${this.props.user}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          user_id: this.props.user,
-          game_id: this.props.gameid,
-          card_id: id
-        })
-      }
-    )
-      .then(resp => resp.json())
-      .then(data => this.props.handleMessage(data));
-  };
+
+  handleClick = (id) =>{
+    fetch(`http://localhost:3000/games/${this.props.gameid}/${this.props.user}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: this.props.user,
+        game_id: this.props.gameid,
+        card_id: id
+      })
+    })
+    .then(resp => resp.json())
+    .then(data => this.props.handleMessage(data))
+  }
 
   render() {
     const { id, img_url, name, hidden } = this.props.card;
@@ -49,9 +47,7 @@ export default class ShowCard extends Component {
                 {name}
               </Card.Title>
             </Card.Body>
-            <Button onClick={() => this.handleClick(id)} size="sm">
-              Guess?
-            </Button>
+            <Button onClick={() => this.handleClick(id)} size="sm">Guess?</Button>
           </Card>
         </Col>
       </div>

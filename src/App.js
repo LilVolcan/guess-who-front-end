@@ -77,11 +77,11 @@ export default class App extends React.Component {
   };
 
   handleChangeTheme = event => {
-    console.log("picked theme:", this.state.pickedTheme);
+    // console.log("picked theme:", this.state.pickedTheme);
     this.setState({
       pickedTheme: event.target.value
     });
-    console.log("pickedTheme2: ", this.state.pickedTheme);
+    // console.log("pickedTheme2: ", this.state.pickedTheme);
     fetch(`http://localhost:3000/cards/${event.target.value}`)
       .then(resp => resp.json())
       .then(data => {
